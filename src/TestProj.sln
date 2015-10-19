@@ -7,12 +7,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProj", "TestProj\TestPr
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		OSX_Debug|x64 = OSX_Debug|x64
+		OSX_Release|x64 = OSX_Release|x64
 		Ubuntu_Debug|x64 = Ubuntu_Debug|x64
 		Ubuntu_Release|x64 = Ubuntu_Release|x64
 		Windows_Debug|x64 = Windows_Debug|x64
 		Windows_Release|x64 = Windows_Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AE9BC745-284F-42F3-8236-C43FF9731DF2}.OSX_Debug|x64.ActiveCfg = OSX_Debug|x64
+		{AE9BC745-284F-42F3-8236-C43FF9731DF2}.OSX_Debug|x64.Build.0 = OSX_Debug|x64
+		{AE9BC745-284F-42F3-8236-C43FF9731DF2}.OSX_Release|x64.ActiveCfg = OSX_Release|x64
+		{AE9BC745-284F-42F3-8236-C43FF9731DF2}.OSX_Release|x64.Build.0 = OSX_Release|x64
 		{AE9BC745-284F-42F3-8236-C43FF9731DF2}.Ubuntu_Debug|x64.ActiveCfg = Ubuntu_Debug|x64
 		{AE9BC745-284F-42F3-8236-C43FF9731DF2}.Ubuntu_Debug|x64.Build.0 = Ubuntu_Debug|x64
 		{AE9BC745-284F-42F3-8236-C43FF9731DF2}.Ubuntu_Release|x64.ActiveCfg = Ubuntu_Release|x64
