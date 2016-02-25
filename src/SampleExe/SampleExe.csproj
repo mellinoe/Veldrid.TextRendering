@@ -5,8 +5,8 @@
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <ProjectGuid>{AE9BC745-284F-42F3-8236-C43FF9731DF2}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>TestProj</RootNamespace>
-    <AssemblyName>TestProj</AssemblyName>
+    <AssemblyName>SampleExe</AssemblyName>
+    <RootNamespace>$(AssemblyName)</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
