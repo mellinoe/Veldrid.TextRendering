@@ -4,7 +4,7 @@ This repo provides a barebones template for creating multi-platform applications
 
 #Requirements
 * Visual Studio 2015 (MSBuild 14.0)
-* Nuget.exe 3.x or equivalent
+* .NET CLI or NuGet.exe (for restoring NuGet packages)
 
 # Setup/Build instructions
 First, clone the repo recursively (`git clone --recursive https://github.com/mellinoe/coretemplate <path>`)
@@ -18,8 +18,8 @@ Building in VS is easier and more user-friendly, but not completely necessary.
 4. Optionally, set a break point and debug the program
 
 ## Building outside VS
-1. run nuget restore or equivalent to restore the packages for the solution
-2. run msbuild /p:Configuration=Windows_Debug (or other configuration)
+1. run `dotnet restore` to restore the packages for the solution
+2. run `msbuild /p:Configuration=Windows_Debug` (or another configuration, depending on your target OS)
 
 # Build Artifacts
 * The intermediate objects from the build will be placed in ````<root>/bin/obj/<arch>/<platform>_<config>/````
