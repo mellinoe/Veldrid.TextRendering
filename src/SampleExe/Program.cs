@@ -1,6 +1,6 @@
 using System;
 
-namespace TestProj
+namespace SampleExe
 {
     public class Program
     {
