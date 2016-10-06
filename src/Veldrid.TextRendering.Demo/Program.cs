@@ -13,7 +13,6 @@ namespace Veldrid.TextRendering
     public class Program
     {
         private const int AtlasWidth = 2048;
-
         private static DynamicDataProvider<Matrix4x4> _projection = new DynamicDataProvider<Matrix4x4>(Matrix4x4.Identity);
         private static DynamicDataProvider<Vector4> _fontAtlasInfo = new DynamicDataProvider<Vector4>(new Vector4(AtlasWidth));
 
@@ -23,13 +22,13 @@ namespace Veldrid.TextRendering
             RenderContext rc = CreateRenderContext(window);
             rc.RegisterGlobalDataProvider("ProjectionMatrix", _projection);
             FontFace fontFace;
-            using (var fs = File.OpenRead(@"C:\Windows\Fonts\consola.ttf"))
+            using (var fs = File.OpenRead(@"C:\Windows\Fonts\segoeui.ttf"))
             {
                 fontFace = new FontFace(fs);
             }
 
             TextureAtlas atlas = new TextureAtlas(rc, AtlasWidth);
-            TextBuffer textBuffer = new TextBuffer(rc, 1024);
+            TextBuffer textBuffer = new TextBuffer(rc);
             TextAnalyzer textAnalyzer = new TextAnalyzer(atlas);
             textBuffer.Append(textAnalyzer, fontFace, "Hello Veldrid.TextRenderer", 36, AtlasWidth, new RectangleF(50, 50, 400, 400));
 
@@ -53,7 +52,11 @@ namespace Veldrid.TextRendering
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                return new D3DRenderContext(window, SharpDX.Direct3D11.DeviceCreationFlags.Debug);
+                SharpDX.Direct3D11.DeviceCreationFlags creationFlags = SharpDX.Direct3D11.DeviceCreationFlags.None;
+#if DEBUG
+                creationFlags |= SharpDX.Direct3D11.DeviceCreationFlags.Debug;
+#endif
+                return new D3DRenderContext(window, creationFlags);
             }
             else
             {

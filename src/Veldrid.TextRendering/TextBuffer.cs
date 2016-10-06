@@ -11,29 +11,15 @@ namespace Veldrid.TextRendering
         private IndexBuffer _ib;
         private VertexBuffer _vb;
         private Material _material;
+        private int _filledIndexCount;
         private int _count;
         private readonly RenderContext _rc;
         private ShaderConstantBindings _constantBindings;
 
-        public TextBuffer(RenderContext rc, int capacity)
+        public TextBuffer(RenderContext rc)
         {
             _rc = rc;
-            var indicesArray = new ushort[capacity * 6];
-            fixed (ushort* indicesPtr = indicesArray)
-            {
-                ushort* indices = indicesPtr;
-                for (int i = 0, v = 0; i < capacity; i++, v += 4)
-                {
-                    *indices++ = (ushort)(v + 0);
-                    *indices++ = (ushort)(v + 2);
-                    *indices++ = (ushort)(v + 1);
-                    *indices++ = (ushort)(v + 2);
-                    *indices++ = (ushort)(v + 0);
-                    *indices++ = (ushort)(v + 3);
-                }
-            }
-
-            _ib = rc.ResourceFactory.CreateIndexBuffer(indicesArray, IndexFormat.UInt16, false);
+            _ib = rc.ResourceFactory.CreateIndexBuffer(600, false);
             _material = CreateMaterial(rc);
         }
 
@@ -54,26 +40,29 @@ namespace Veldrid.TextRendering
             analyzer.AppendText(text, format);
             analyzer.PerformLayout(drawRect.X, drawRect.Y, drawRect.Width, drawRect.Height, layout);
 
-            var memBlock = new TextVertex[text.Length * 6];
-            fixed (TextVertex* memBlockPtr = memBlock)
+            TextVertex[] memBlock = new TextVertex[text.Length * 4];
+            int index = 0;
+            foreach (var thing in layout.Stuff)
             {
-                TextVertex* mem = memBlockPtr;
-                foreach (var thing in layout.Stuff)
-                {
-                    var width = thing.Width;
-                    var height = thing.Height;
-                    var region = new Vector4(thing.SourceX, thing.SourceY, width, height) / atlasWidth;
-                    var origin = new Vector2(thing.DestX, thing.DestY);
-                    *mem++ = new TextVertex(origin + new Vector2(0, height), new Vector2(region.X, region.Y + region.W), color);
-                    *mem++ = new TextVertex(origin + new Vector2(width, height), new Vector2(region.X + region.Z, region.Y + region.W), color);
-                    *mem++ = new TextVertex(origin + new Vector2(width, 0), new Vector2(region.X + region.Z, region.Y), color);
-                    *mem++ = new TextVertex(origin, new Vector2(region.X, region.Y), color);
-                    _count++;
-                }
+                var width = thing.Width;
+                var height = thing.Height;
+                var region = new Vector4(thing.SourceX, thing.SourceY, width, height) / atlasWidth;
+                var origin = new Vector2(thing.DestX, thing.DestY);
+                memBlock[index++] = new TextVertex(origin + new Vector2(0, height), new Vector2(region.X, region.Y + region.W), color);
+                memBlock[index++] = new TextVertex(origin + new Vector2(width, height), new Vector2(region.X + region.Z, region.Y + region.W), color);
+                memBlock[index++] = new TextVertex(origin + new Vector2(width, 0), new Vector2(region.X + region.Z, region.Y), color);
+                memBlock[index++] = new TextVertex(origin, new Vector2(region.X, region.Y), color);
+                _count++;
             }
 
             _vb?.Dispose();
             _vb = _rc.ResourceFactory.CreateVertexBuffer(memBlock, new VertexDescriptor(TextVertex.SizeInBytes, 3), false);
+            EnsureIndexCapacity(_count);
+        }
+
+        public void Clear()
+        {
+            _count = 0;
         }
 
         public void Render(TextureAtlas atlas, ConstantBufferDataProvider atlasInfo)
@@ -107,6 +96,27 @@ namespace Veldrid.TextRendering
             Material material = new Material(rc, shaderSet, _constantBindings, textureSlots);
 
             return material;
+        }
+
+        private unsafe void EnsureIndexCapacity(int capacity)
+        {
+            int needed = capacity - _filledIndexCount;
+            if (needed > 0)
+            {
+                ushort[] indices = new ushort[needed * 6];
+                for (int i = 0, v = _filledIndexCount * 4; i < needed; i++, v += 4)
+                {
+                    indices[i * 6 + 0] = (ushort)(v + 0);
+                    indices[i * 6 + 1] = (ushort)(v + 2);
+                    indices[i * 6 + 2] = (ushort)(v + 1);
+                    indices[i * 6 + 3] = (ushort)(v + 2);
+                    indices[i * 6 + 4] = (ushort)(v + 0);
+                    indices[i * 6 + 5] = (ushort)(v + 3);
+                }
+
+                _ib.SetIndices(indices, IndexFormat.UInt16, 0, _filledIndexCount * 6);
+                _filledIndexCount = capacity;
+            }
         }
     }
 
