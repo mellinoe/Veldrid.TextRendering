@@ -50,7 +50,7 @@ namespace Veldrid.TextRendering
 
         private static RenderContext CreateRenderContext(OpenTKWindowBase window)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 SharpDX.Direct3D11.DeviceCreationFlags creationFlags = SharpDX.Direct3D11.DeviceCreationFlags.None;
 #if DEBUG

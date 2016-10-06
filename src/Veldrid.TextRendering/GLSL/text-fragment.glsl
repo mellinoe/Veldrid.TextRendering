@@ -1,6 +1,9 @@
 ﻿#version 140
 
-uniform vec4 AtlasInfo;
+uniform AtlasInfoBuffer
+{
+    vec3 AtlasInfo;
+};
 
 uniform usampler2D FontAtlas;
 

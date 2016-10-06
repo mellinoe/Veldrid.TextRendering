@@ -91,7 +91,7 @@ namespace Veldrid.TextRendering
             _constantBindings = factory.CreateShaderConstantBindings(rc, shaderSet,
                 new MaterialInputs<MaterialGlobalInputElement>(new MaterialGlobalInputElement("ProjectionMatrixBuffer", MaterialInputType.Matrix4x4, "ProjectionMatrix")),
                 new MaterialInputs<MaterialPerObjectInputElement>(
-                    new MaterialPerObjectInputElement("AtlasInfo", MaterialInputType.Custom, 16)));
+                    new MaterialPerObjectInputElement("AtlasInfoBuffer", MaterialInputType.Custom, 16)));
             ShaderTextureBindingSlots textureSlots = factory.CreateShaderTextureBindingSlots(shaderSet, new MaterialTextureInputs(new ManualTextureInput("FontAtlas")));
             Material material = new Material(rc, shaderSet, _constantBindings, textureSlots);
 
