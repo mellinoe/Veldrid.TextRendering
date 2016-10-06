@@ -251,3 +251,7 @@ Session.vim
 
 # VS Code
 .vscode
+
+# VC DB things
+*VC.DB
+*VC.opendb

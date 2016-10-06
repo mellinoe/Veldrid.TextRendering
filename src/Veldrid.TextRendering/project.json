@@ -1,0 +1,10 @@
+﻿{
+  "dependencies": {
+    "Veldrid": { "target": "project" }
+  },
+  "frameworks": {
+    "netstandard1.5": {
+        "imports": [ "portable-net45+win8+wpa81" ]
+    }
+  }
+}

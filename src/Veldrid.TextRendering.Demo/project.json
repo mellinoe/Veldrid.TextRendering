@@ -3,6 +3,7 @@
     "System.Console": "4.0.0",
     "Microsoft.NETCore.DotNetHostPolicy": "1.0.1",
     "Microsoft.NETCore.Runtime.CoreCLR": "1.0.2",
+    "Veldrid.TextRendering": { "target": "project" },
   },
   "runtimes": {
     "win10-x64": { },
@@ -10,6 +11,8 @@
     "osx.10.10-x64": { }
   },
   "frameworks": {
-    "netcoreapp1.0": { }
+    "netcoreapp1.0": {
+      "imports": [ "portable-net45+win8+wpa81" ]
+    }
   }
 }

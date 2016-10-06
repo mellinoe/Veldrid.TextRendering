@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.props))\dir.props" />
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <AssemblyName>Veldrid.TextRendering</AssemblyName>
+    <RootNamespace>$(AssemblyName)</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ProjectGuid>{E0A90694-83AF-452C-AB89-D211086F9522}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="TextBuffer.cs" />
+    <Compile Include="TextureAtlas.cs" />
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
+  <ItemGroup>
+    <None Include="project.json" />
+    <ProjectReference Include="$(ExtFolder)\veldrid\src\Veldrid\Veldrid.csproj" />
+    <ProjectReference Include="$(ExtFolder)\sharpfont\SharpFont\SharpFont.NETCore.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="GLSL\text-fragment.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GLSL\text-vertex.glsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="HLSL\text-fragment.hlsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="HLSL\text-vertex.hlsl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.targets))\dir.targets" />
+</Project>
