@@ -1,4 +1,4 @@
-﻿cbuffer FontAtlasInfo : register(b1)
+﻿cbuffer AtlasInfo : register(b1)
 {
     float AtlasWidth;
     float3 __unused0;
